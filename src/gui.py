@@ -21,7 +21,7 @@ class GUI(object):
         #|#####E|
         
         for row in maze:
-            print(row)
+            print "".join(row)
             
             
     def print_menu(self):
@@ -30,12 +30,6 @@ class GUI(object):
         while(not menu_choice in accepted_choice):
             return int(input("MENU:\n1 = Start new game\n2 = Load game from a file\n3 = Exit\n"))
         
-        
-            
-
-            
-        def print_options():
-            print("OPTIONS: w: Move up\ns: Move down\na: Move left\nd: Move right\n q: Quit game\n g: Save game\n")
             
             
             

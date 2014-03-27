@@ -25,7 +25,7 @@ class Game(object):
             menu_sel = self.gui.print_menu()
             if(menu_sel == 1):
                 #start new game
-                while(True):
+                """while(True):
                     options = self.gui.print_options()
                     if(options == "w"):
                         move(UP)
@@ -38,10 +38,9 @@ class Game(object):
                     if(options == "q"):
                         break   
                     if(options == "l"):
-                        self.save_game()                   
-                
-                game_maze = Labyrinth.generate_maze(6,6)
-                self.print_game(game_maze)
+                        self.save_game()"""
+                labyrinth = Labyrinth(20,20)
+                self.gui.print_game(labyrinth.getMaze())
                 
                 
             if(menu_sel == 2):
