@@ -1,5 +1,6 @@
 from pos import Pos
 from random import shuffle
+from random import randint
 
 class Labyrinth():
     WALL = '#'
@@ -10,6 +11,13 @@ class Labyrinth():
         self.height = height
         
         self.maze = [[self.WALL for i in range(width)] for j in range(height)]
+        
+        #make a list of the possible directions
+        self.directions = list()
+        self.directions.append(Pos(1,0))
+        self.directions.append(Pos(-1,0))                
+        self.directions.append(Pos(0,1))
+        self.directions.append(Pos(0,-1))
         
         #set the starting position
         self.drawTile(Pos(1,1), Pos(1,1))
@@ -22,22 +30,22 @@ class Labyrinth():
             
             #make sure the neighboring tiles haven't been drawn to
             if (
-                self.isDrawable(pos.add(dx, dy)) #the tile is drawable
+                self.isDrawable(pos.add(dx, dy)) #the next tile is drawable
                 and self.isDrawable(pos.add(dy, dx)) #90 deg angle in both directions is drawable so that we have walls
                 and self.isDrawable(pos.add(-dy, -dx))
+                and self.isDrawable(pos.add(dx, dy).add(dy, dx)) #90 deg angle in both directions beside the next tile is drawable so that we have walls
+                and self.isDrawable(pos.add(dx, dy).add(-dy, -dx))
             ):
                 self.maze[pos.x][pos.y] = self.CLEAR
                 
-                #make a list of the possible directions
-                directions = list()
-                directions.append(Pos(1,0))
-                directions.append(Pos(-1,0))                
-                directions.append(Pos(0,1))
-                directions.append(Pos(0,-1))
+                #shuffle the direction list every once in a while
+                if (randint(0,5) < 1):
+                    shuffle(self.directions)
                 
-                shuffle(directions)
+                #copy the list of all the possible directions
+                dirs = list(self.directions)
                 
-                for dir in directions:
+                for dir in dirs:
                     self.drawTile(pos, pos.add(dir))
         
         
