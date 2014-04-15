@@ -1,6 +1,8 @@
 from pos import Pos
-from random import shuffle
+from node import Node
+
 from random import randint
+from random import shuffle
 
 class Labyrinth():
     WALL = '#'
@@ -9,7 +11,6 @@ class Labyrinth():
     def __init__(self, width, height):
         self.width = width
         self.height = height
-        
         self.maze = [[self.WALL for i in range(width)] for j in range(height)]
         
         #make a list of the possible directions
@@ -20,9 +21,10 @@ class Labyrinth():
         self.directions.append(Pos(0,-1))
         
         #set the starting position
-        self.drawTile(Pos(1,1), Pos(1,1))
+        initPos = Pos(1,1)
+        self.initNode = self.drawTile(initPos, initPos, False)
     
-    def drawTile(self, prevPos, pos):
+    def drawTile(self, prevPos, pos, prevNode):
         if (self.isDrawable(pos)):
             #calculate delta from prevPos
             dx = pos.x - prevPos.x
@@ -37,6 +39,9 @@ class Labyrinth():
                 and self.isDrawable(pos.add(dx, dy).add(-dy, -dx))
             ):
                 self.maze[pos.x][pos.y] = self.CLEAR
+                #in the first node the prev param should be false
+                newNode = Node(pos, prevNode)
+                
                 
                 #shuffle the direction list every once in a while
                 if (randint(0,5) < 1):
@@ -46,7 +51,9 @@ class Labyrinth():
                 dirs = list(self.directions)
                 
                 for dir in dirs:
-                    self.drawTile(pos, pos.add(dir))
+                    self.drawTile(pos, pos.add(dir), newNode)
+                    
+                return newNode
         
         
     def isDrawable(self, pos):

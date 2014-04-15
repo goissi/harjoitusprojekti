@@ -1,4 +1,5 @@
 from game import Game
+from labyrinth import Labyrinth
 
 def main():
     first_game = Game()

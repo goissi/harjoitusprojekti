@@ -1,8 +1,6 @@
 from gui import GUI
 from labyrinth import Labyrinth
 
-
-
 class Game(object):
     
     UP = 0
