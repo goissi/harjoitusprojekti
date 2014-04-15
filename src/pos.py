@@ -1,13 +1,21 @@
 class Pos(object):
     def __init__(self, x=0, y=0, z=0):
-        self.setPosition(x,y, z)
+        if (isinstance(x, Pos)):
+            self.setPosition(x.getX(), x.getY(), x.getZ())
+        else:
+            self.setPosition(x,y,z)
     
-    def add(self, x, y=False):
-        if (y is False and not x.y is False):
-            pos = x;
-            return self.add(pos.x, pos.y)
+    def add(self, x, y=0, z=0):
+        p = Pos(x, y, z)
         
-        return Pos(self.x+x, self.y+y)
+        #calculate new position
+        return Pos(self.getX()+p.getX(), self.getY()+p.getY(), self.getZ()+p.getZ())
+    
+    def subtract(self, x, y=0, z=0):
+        p = Pos(x, y, z)
+        
+        #calculate new position
+        return Pos(self.getX()-p.getX(), self.getY()-p.getY(), self.getZ()-p.getZ())
     
     def setPosition(self, x=0, y=0, z=0):
         self.x = x
