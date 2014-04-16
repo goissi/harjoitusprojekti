@@ -1,5 +1,6 @@
 from gui import GUI
 from labyrinth import Labyrinth
+from player import Player
 
 class Game(object):
     
@@ -11,7 +12,7 @@ class Game(object):
     gui = False
     
     def move(self, direction):
-        return True
+        self.player.move(direction)
     
     def save_game(self):
         return True
@@ -23,22 +24,21 @@ class Game(object):
             menu_sel = self.gui.print_menu()
             if(menu_sel == 1):
                 #start new game
-                """while(True):
-                    options = self.gui.print_options()
-                    if(options == "w"):
-                        move(UP)
-                    if(options == "s"):
-                        move(DOWN)
-                    if(options == "a"):
-                        move(LEFT)
-                    if(options == "d"):
-                        move(RIGHT)
-                    if(options == "q"):
-                        break   
-                    if(options == "l"):
-                        self.save_game()"""
-                labyrinth = Labyrinth(20,20)
-                self.gui.print_game(labyrinth.getMaze())
+                #set labyrinth size:
+                height = 0
+                width = 0
+                width = self.gui.ask_width()
+                height = self.gui.ask_height()
+                
+                #create labyrinth
+                self.labyrinth = Labyrinth(width, height)
+                
+                #createa player
+                self.player = Player(self.labyrinth.getStartNode())                
+
+                #the game itself
+                
+                self.gui.game_loop()
                 
                 
             if(menu_sel == 2):

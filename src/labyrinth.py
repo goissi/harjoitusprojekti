@@ -7,11 +7,14 @@ from random import shuffle
 class Labyrinth():
     WALL = '#'
     CLEAR = ' '
+    END = 'E'
     
     def __init__(self, width, height):
         self.width = width
         self.height = height
-        self.maze = [[self.WALL for i in range(width)] for j in range(height)]
+        self.maze = [[False for i in range(height)] for j in range(width)]
+        self.nodes = list()
+        self.endNode = False
         
         #make a list of the possible directions
         self.directions = list()
@@ -38,11 +41,19 @@ class Labyrinth():
                 and self.isDrawable(pos.add(dx, dy).add(dy, dx)) #90 deg angle in both directions beside the next tile is drawable so that we have walls
                 and self.isDrawable(pos.add(dx, dy).add(-dy, -dx))
             ):
-                self.maze[pos.x][pos.y] = self.CLEAR
+                self.maze[pos.x][pos.y] = True
                 #in the first node the prev param should be false
-                newNode = Node(pos, prevNode)
+                depth = 0
+                if(prevNode != False):
+                    depth = prevNode.getDepth() + 1
+                newNode = Node(pos, prevNode, depth)
+                #add to list
+                self.nodes.append(newNode)
                 
+                if(self.endNode == False or self.endNode.getDepth() < newNode.getDepth()):
+                    self.endNode = newNode
                 
+                    
                 #shuffle the direction list every once in a while
                 if (randint(0,5) < 1):
                     shuffle(self.directions)
@@ -63,12 +74,24 @@ class Labyrinth():
         if (pos.x>=self.width or pos.y>=self.height):
             return False
         #make sure the proposed position has not yet been drawn to
-        if (self.maze[pos.x][pos.y] != self.WALL):
+        if (self.maze[pos.x][pos.y]):
             return False
         return True
     
     def getMaze(self):
-        return self.maze
+        maze = [[self.WALL for i in range(self.height)] for j in range(self.width)]
+        
+        for node in self.nodes:
+            maze[node.getX()][node.getY()] = self.CLEAR
+        
+        maze[self.endNode.getX()][self.endNode.getY()] = self.END
+        
+        return maze
     
     def solve_maze(self):
         return "ssseeeeeesss"
+    
+    def getStartNode(self):
+        return self.initNode
+    
+    
