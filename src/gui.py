@@ -25,24 +25,30 @@ class GUI(object):
         
         
     def print_options(self):
-        option = str(raw_input("OPTIONS:\nw: Move up\ns: Move down\na: Move left\nd: Move right\nq: Quit game\ng: Save game\n"))
+        print("OPTIONS:\nw: Move up\ns: Move down\na: Move left\nd: Move right\nq: Quit game\ng: Save game\n")
+            
+    def handle_options(self):
+        option = str(raw_input())
+        self.clear()
         
         if(option == "w"):
             self.game.move(self.game.UP)
-        if(option == "s"):
+        elif(option == "s"):
             self.game.move(self.game.DOWN)
-        if(option == "a"):
+        elif(option == "a"):
             self.game.move(self.game.LEFT)
-        if(option == "d"):
+        elif(option == "d"):
             self.game.move(self.game.RIGHT)
-        if(option == "q"):
-            return 'x'
-        if(option == "l"):
+        elif(option == "q"):
+            self.game.labyrinth.solve_maze(self.game.player.getCurrentNode())
+            return False
+        elif(option == "g"):
             self.game.save_game()
-        
+        else:
+            self.print_options()
+        return True
+    
     def print_game(self, maze):
-        self.clear()
-        
         for y in xrange(0, len(maze[0])):
             for x in xrange(0, len(maze)):
                 sys.stdout.write(maze[x][y])
@@ -58,14 +64,24 @@ class GUI(object):
         return int(menu_choice)
         
     def game_loop(self):
+        self.clear()
+        self.print_options()
         while(True):
-            maze = self.game.labyrinth.getMaze()
-            maze[self.game.player.getX()][self.game.player.getY()] = "@"
             
+            maze = self.game.labyrinth.getMaze()
             self.print_game(maze)
             
-            if(self.print_options() == "x"):
+            if(self.handle_options() == False):
+                maze = self.game.labyrinth.getMaze()
+                self.print_game(maze)
                 break
+            
+            
+            if (self.game.hasWon()):
+                print("You won!")
+                break
+            
+
             
             
             

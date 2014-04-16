@@ -21,7 +21,7 @@ class Pos(object):
     
     def __eq__(self, obj):
         #http://www.dimagi.com/overriding-equals-in-python/
-        return self.getX() == obj.getX() and self.getY() == obj.getY() and self.getZ() == obj.getZ()
+        return isinstance(obj, Pos) and self.getX() == obj.getX() and self.getY() == obj.getY() and self.getZ() == obj.getZ()
         
     
     def getDirection(self, x, y=0, z=0):

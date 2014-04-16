@@ -15,7 +15,10 @@ class Game(object):
         self.player.move(direction)
     
     def save_game(self):
-        return True
+        print("player position:"+str(self.player.getCurrentNode().getId))
+        #print() labyrinth size
+        for node in self.labyrinth.nodes:
+            print(node.info())
     
     def play_game(self):
         while(True):
@@ -48,7 +51,10 @@ class Game(object):
                 #Exit game
                 return self.end_game()
         
-                
+    def hasWon(self):
+        return self.player.getCurrentNode() == self.labyrinth.getEndNode()
+        
+    
     def end_game(self):
         print("Ending game.")
         return 0
