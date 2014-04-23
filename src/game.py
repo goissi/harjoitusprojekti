@@ -21,10 +21,10 @@ class Game(object):
         f = open('saved_games.dat', 'w+')
         
         
-        f.write("player position:"+str(self.player.getCurrentNode().getId())+'\n')
+        f.write("player position:"+str(self.player.getCurrentNode().getId())+'\n') # print("player position:"+str(self.player.getCurrentNode().getId()), file=f)
         #print() labyrinth size
         for node in self.labyrinth.nodes:
-            f.write(node.info())
+            f.write(node.info())  # print(node.info(), file=f)
             
         f.close()
         
