@@ -18,7 +18,7 @@ class Game(object):
     
     def save_game(self):
         #create file
-        f = open(r'saved_games.dat', 'w+')
+        f = open('saved_games.dat', 'w+')
         
         
         f.write("player position:"+str(self.player.getCurrentNode().getId())+'\n')
