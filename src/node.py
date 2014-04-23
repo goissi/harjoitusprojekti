@@ -78,13 +78,13 @@ class Node(object):
         s += "Y:" + str(self.getY()) + "\n"
         s += "Z:" + str(self.getZ()) + "\n"
         if(self.getConnection(game.Game.UP)):
-            s += "ConnectionUP:" + str(self.getConnection(game.Game.UP).getId) + "\n"
+            s += "ConnectionUP:" + str(self.getConnection(game.Game.UP).getId()) + "\n"
         if(self.getConnection(game.Game.DOWN)):
-            s += "ConnectionDOWN:" + str(self.getConnection(game.Game.DOWN).getId) + "\n"
+            s += "ConnectionDOWN:" + str(self.getConnection(game.Game.DOWN).getId()) + "\n"
         if(self.getConnection(game.Game.RIGHT)):
-            s += "ConnectionRIGHT:" + str(self.getConnection(game.Game.RIGHT).getId) + "\n"
+            s += "ConnectionRIGHT:" + str(self.getConnection(game.Game.RIGHT).getId()) + "\n"
         if(self.getConnection(game.Game.LEFT)):
-            s += "ConnectionLEFT:" + str(self.getConnection(game.Game.LEFT).getId) + "\n"              
+            s += "ConnectionLEFT:" + str(self.getConnection(game.Game.LEFT).getId()) + "\n"              
         
         return s
         

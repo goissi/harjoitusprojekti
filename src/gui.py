@@ -2,11 +2,15 @@
 #from game import Game
 import sys
 import os
+import platform
 
 class GUI(object):
     def __init__(self, game):
         self.game = game
-        self.clear = lambda: os.system('cls') #for windows cls instead of clear
+        if platform.system() == 'Windows':
+            self.clear = lambda: os.system('cls')
+        else:
+            self.clear = lambda: os.system('clear')
         
     def ask_height(self):
         ret = 0
