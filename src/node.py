@@ -2,11 +2,11 @@ from pos import Pos
 import game
 
 class Node(object):
-    def __init__(self, coords, prev=False, depth=0):
+    def __init__(self, coords, prev=False, depth=0, id=False):
         self.coords = coords
         self.connections = [False for i in range(4)]
         self.depth = depth
-        self.id = 0
+        self.id = id
         self.flagged = False
         self.playerOnboard = False
         self.prev = False #this is for solving the maze and is obsolete before that
@@ -28,11 +28,20 @@ class Node(object):
     def getCoords(self):
         return self.coords
     
+    def setX(self, x):
+        self.coords.setX(x)
+    
     def getX(self):
         return self.coords.getX()
     
+    def setY(self, y):
+        self.coords.setY(y)
+    
     def getY(self):
         return self.coords.getY()
+    
+    def setZ(self, z):
+        self.coords.setZ(z)
     
     def getZ(self):
         return self.coords.getZ()
@@ -87,5 +96,15 @@ class Node(object):
             s += "ConnectionLEFT:" + str(self.getConnection(game.Game.LEFT).getId()) + "\n"              
         
         return s
+    
+    def dirToStr(self, dir):
+        if (dir == game.Game.RIGHT):
+            return 'RIGHT'
+        if (dir == game.Game.LEFT):
+            return 'LEFT'
+        if (dir == game.Game.UP):
+            return 'UP'
+        if (dir == game.Game.DOWN):
+            return 'DOWN'
         
         

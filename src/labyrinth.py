@@ -20,6 +20,7 @@ class Labyrinth():
         self.nodes = list()
         self.endNode = False
         
+    def generateMaze(self):
         #make a list of the possible directions
         self.directions = list()
         self.directions.append(Pos(1,0))
@@ -28,8 +29,8 @@ class Labyrinth():
         self.directions.append(Pos(0,-1))
         
         #set the starting position
-        initPos = Pos(1,1)
-        #initPos = Pos(self.width/2, self.height/2)
+        #initPos = Pos(1,1)
+        initPos = Pos(int(round(self.width/2, 0)), int(round(self.height/2, 0)))
         self.initNode = self.drawTile(initPos, initPos, False)
     
     def findNode(self, pos):
@@ -38,6 +39,18 @@ class Labyrinth():
                 return node
         
         return False
+    
+    def findNodeById(self, id):
+        for node in self.nodes:
+            if(node.getId() == id):
+                return node
+        
+        return False
+    
+    def addNode(self, node):
+        if (node.getId() == False):
+            node.setId(len(self.nodes))
+        self.nodes.append(node)
     
     def addWedges(self):
 
@@ -54,17 +67,16 @@ class Labyrinth():
                     #first bridge node
                     bridge1 = Node(Pos(x-3, y, 1))
                     bridge1.setConnection(game.Game.RIGHT, start)
-                    self.nodes.append(bridge1)
+                    self.addNode(bridge1)
                     
                     bridge2 = Node(Pos(x-2, y, 1))
                     bridge2.setConnection(game.Game.RIGHT, bridge1)
-                    self.nodes.append(bridge2)
+                    self.addNode(bridge2)
                     
                     bridge3 = Node(Pos(x-1, y, 1))
                     bridge3.setConnection(game.Game.RIGHT, bridge2)
                     bridge3.setConnection(game.Game.LEFT, end)
-                    self.nodes.append(bridge3)
-                    
+                    self.addNode(bridge3)
                                         
                     
     def drawTile(self, prevPos, pos, prevNode):
@@ -88,8 +100,7 @@ class Labyrinth():
                     depth = prevNode.getDepth() + 1
                 newNode = Node(pos, prevNode, depth)
                 #add to list
-                newNode.setId(len(self.nodes))
-                self.nodes.append(newNode)
+                self.addNode(newNode)
                 
                 if(self.endNode is False or self.endNode.getDepth() < newNode.getDepth()):
                     self.endNode = newNode
@@ -166,7 +177,7 @@ class Labyrinth():
         return self.initNode
 
     def getEndNode(self):
-        return self.endNode   
+        return self.endNode
     
-    
-    
+    def getLastNode(self):
+        return self.nodes[-1]

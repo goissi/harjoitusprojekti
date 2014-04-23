@@ -41,15 +41,24 @@ class Pos(object):
                 return game.Game.UP
             
     def setPosition(self, x=0, y=0, z=0):
+        self.setX(x)
+        self.setY(y)
+        self.setZ(z)
+    
+    def setX(self, x):
         self.x = x
-        self.y = y
-        self.z = z
     
     def getX(self):
         return self.x
     
+    def setY(self, y):
+        self.y = y
+    
     def getY(self):
         return self.y
+    
+    def setZ(self, z):
+        self.z = z
     
     def getZ(self):
         return self.z

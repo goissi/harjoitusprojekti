@@ -53,7 +53,9 @@ class GUI(object):
             self.print_options()
         return True
     
-    def print_game(self, maze):
+    def print_game(self):
+        maze = self.game.labyrinth.getMaze()
+        
         for y in range(0, len(maze[0])):
             for x in range(0, len(maze)):
                 sys.stdout.write(maze[x][y])
@@ -73,12 +75,11 @@ class GUI(object):
         self.print_options()
         while(True):
             
-            maze = self.game.labyrinth.getMaze()
-            self.print_game(maze)
+            
+            self.print_game()
             
             if(self.handle_options() == False):
-                maze = self.game.labyrinth.getMaze()
-                self.print_game(maze)
+                self.print_game()
                 break
             
             
