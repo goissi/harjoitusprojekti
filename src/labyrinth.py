@@ -29,6 +29,7 @@ class Labyrinth():
         
         #set the starting position
         initPos = Pos(1,1)
+        #initPos = Pos(self.width/2, self.height/2)
         self.initNode = self.drawTile(initPos, initPos, False)
     
     def findNode(self, pos):
@@ -40,8 +41,8 @@ class Labyrinth():
     
     def addWedges(self):
 
-        for y in xrange(0, len(self.maze[0])):
-            for x in xrange(4, len(self.maze)):
+        for y in range(0, len(self.maze[0])):
+            for x in range(4, len(self.maze)):
                 if(randint(0, 3 * self.width * self.height) < 1 and
                     self.maze[x-4][y] == True and
                     self.maze[x-3][y] == False and
@@ -101,8 +102,8 @@ class Labyrinth():
                 #copy the list of all the possible directions
                 dirs = list(self.directions)
                 
-                for dir in dirs:
-                    self.drawTile(pos, pos.add(dir), newNode)
+                for d in dirs:
+                    self.drawTile(pos, pos.add(d), newNode)
                 
                 self.addWedges()
                     

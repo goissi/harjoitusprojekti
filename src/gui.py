@@ -1,4 +1,4 @@
-from labyrinth import Labyrinth
+#from labyrinth import Labyrinth
 #from game import Game
 import sys
 import os
@@ -6,18 +6,18 @@ import os
 class GUI(object):
     def __init__(self, game):
         self.game = game
-        self.clear = lambda: os.system('clear') #for windows cls instead of clear
+        self.clear = lambda: os.system('cls') #for windows cls instead of clear
         
     def ask_height(self):
         ret = 0
         while (ret < 3):
-            ret = int(raw_input("Set labyrinth height:"))
+            ret = int(input("Set labyrinth height:"))
         return ret
     
     def ask_width(self):
         ret = 0
         while (ret < 3):
-            ret = int(raw_input("Set labyrinth width:"))
+            ret = int(input("Set labyrinth width:"))
         return ret        
     
     def print_player_info(self):
@@ -28,7 +28,7 @@ class GUI(object):
         print("OPTIONS:\nw: Move up\ns: Move down\na: Move left\nd: Move right\nq: Quit game\ng: Save game\n")
             
     def handle_options(self):
-        option = str(raw_input())
+        option = str(input())
         self.clear()
         
         if(option == "w"):
@@ -44,13 +44,14 @@ class GUI(object):
             return False
         elif(option == "g"):
             self.game.save_game()
+            return True
         else:
             self.print_options()
         return True
     
     def print_game(self, maze):
-        for y in xrange(0, len(maze[0])):
-            for x in xrange(0, len(maze)):
+        for y in range(0, len(maze[0])):
+            for x in range(0, len(maze)):
                 sys.stdout.write(maze[x][y])
             sys.stdout.write("\n")
             
@@ -60,7 +61,7 @@ class GUI(object):
         accepted_choice ={0,1,2,3}
         menu_choice = -1
         while(not menu_choice in accepted_choice):
-            menu_choice = input("MENU:\n1 = Start new game\n2 = Load game from a file\n3 = Exit\n")
+            menu_choice = int(input("MENU:\n1 = Start new game\n2 = Load game from a file\n3 = Exit\n"))
         return int(menu_choice)
         
     def game_loop(self):
