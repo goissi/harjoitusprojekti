@@ -3,7 +3,7 @@ from labyrinth import Labyrinth
 from player import Player
 from pos import Pos
 from node import Node
-
+import os
 
 class Game(object):
     
@@ -19,7 +19,7 @@ class Game(object):
     
     def save_game(self):
         #create file
-        f = open('saved_games.dat', 'w+')
+        f = open(os.path.realpath(__file__).replace('game.py','')+'saved_game.dat', 'w+')
         
         
         f.write("W:"+str(self.labyrinth.width)+'\n')
@@ -38,7 +38,7 @@ class Game(object):
     
     def load_game(self):
         #file handle
-        f = open('saved_games.dat', 'r');
+        f = open(os.path.realpath(__file__).replace('game.py','')+'saved_game.dat', 'r');
         fileContent = f.read()
         f.close()
         
@@ -94,9 +94,11 @@ class Game(object):
                     self.labyrinth.endNode = self.labyrinth.findNodeById(int(value))
                     
     
-    def play_game(self):
+    def play_game(self, gui = False):
         while(True):
-            self.gui = GUI(self)
+            self.gui = gui
+            if (gui == False):
+                self.gui = GUI(self)
             
             menu_sel = self.gui.print_menu()
             

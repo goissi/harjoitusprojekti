@@ -5,24 +5,30 @@ import os
 import platform
 
 class GUI(object):
-    def __init__(self, game):
+    def __init__(self, game, stdin = sys.stdin):
         self.game = game
+        self.stdin = stdin
         if platform.system() == 'Windows':
             self.clear = lambda: os.system('cls')
         else:
             self.clear = lambda: os.system('clear')
-        
-    def ask_height(self):
-        ret = 0
-        while (ret < 3):
-            ret = int(input("Set labyrinth height:"))
-        return ret
+    
+    def ask(self):
+        return self.stdin.readline().strip()
     
     def ask_width(self):
         ret = 0
-        while (ret < 3):
-            ret = int(input("Set labyrinth width:"))
-        return ret        
+        while (ret < 4):
+            print("Set labyrinth width:")
+            ret = int(self.ask())
+        return ret
+    
+    def ask_height(self):
+        ret = 0
+        while (ret < 4):
+            print("Set labyrinth height:")
+            ret = int(self.ask())
+        return ret
     
     def print_player_info(self):
         print("Moves: "+str(self.game.player.getMoves()))
@@ -32,7 +38,7 @@ class GUI(object):
         print("OPTIONS:\nw: Move up\ns: Move down\na: Move left\nd: Move right\nq: Quit game\ng: Save game\n")
             
     def handle_options(self):
-        option = str(input())
+        option = str(self.ask())
         self.clear()
         
         if(option == "w"):
@@ -67,7 +73,8 @@ class GUI(object):
         accepted_choice ={0,1,2,3}
         menu_choice = -1
         while(not menu_choice in accepted_choice):
-            menu_choice = int(input("MENU:\n1 = Start new game\n2 = Load game from a file\n3 = Exit\n"))
+            print("MENU:\n1 = Start new game\n2 = Load game from a file\n3 = Exit\n")
+            menu_choice = int(self.ask())
         return int(menu_choice)
         
     def game_loop(self):
